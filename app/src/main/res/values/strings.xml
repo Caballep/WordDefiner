@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Nike Code Challenge</string>
+
+    <string-array name="sort_options">
+        <item>-- -- -- -- -- -- --</item>
+        <item>Highest rated</item>
+        <item>Lowest rated</item>
+    </string-array>
+</resources>

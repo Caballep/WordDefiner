@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="15dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    >
+
+    <com.example.nikejosecaballero.ui.views.DefinitionTextView
+        android:id="@+id/definitionTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="You were the Chosen One! It was said that you would destroy the Sith, not
+        join them. bring balance to the force, not leave it in darkness. You were the Chosen One! It was said that you would destroy the Sith, not
+        join them. bring balance to the force, not leave it in darkness. You were the Chosen One! It was said that you would destroy the Sith, not
+        join them. bring balance to the force, not leave it in darkness. You were the Chosen One! It was said that you would destroy the Sith, not
+        join them. bring balance to the force, not leave it in darkness. You were the Chosen One! It was said that you would destroy the Sith, not
+        join them. bring balance to the force, not leave it in darkness. You were the Chosen One! It was said that you would destroy the Sith, not
+        join them. bring balance to the force, not leave it in darkness."
+        android:textSize="18dp"/>
+
+    <TextView
+        android:id="@+id/authorTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:text="Someone"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="#000000"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginBottom="5dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/ic_thumb_up_24dp"/>
+        <TextView
+            android:id="@+id/thumbsUpTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:layout_marginRight="15dp"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/ic_thumb_down_24dp"/>
+        <TextView
+            android:id="@+id/thumbsDownTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/colorPrimary"/>
+
+</LinearLayout>
