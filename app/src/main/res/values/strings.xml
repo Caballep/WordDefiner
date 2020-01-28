@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">Nike Code Challenge</string>
+    <string name="action_bar_edit_text_hint">Enter a word</string>
 
     <string-array name="sort_options">
-        <item>-- -- -- -- -- -- --</item>
+        <item>Nothing</item>
         <item>Highest rated</item>
         <item>Lowest rated</item>
     </string-array>

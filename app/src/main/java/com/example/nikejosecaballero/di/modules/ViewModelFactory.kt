@@ -2,8 +2,8 @@ package com.example.nikejosecaballero.di.modules
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.nikejosecaballero.ui.mainActivity.MainActivityVM
-import com.example.nikejosecaballero.ui.splashScreenActivity.SplashScreenActivityVM
+import com.example.nikejosecaballero.ui.activities.mainActivity.MainActivityVM
+import com.example.nikejosecaballero.ui.activities.splashScreenActivity.SplashScreenActivityVM
 import dagger.Binds
 import dagger.MapKey
 import dagger.Module

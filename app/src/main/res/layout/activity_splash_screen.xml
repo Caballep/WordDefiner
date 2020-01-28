@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorAccent"
-    tools:context=".ui.splashScreenActivity.SplashScreenActivity">
+    tools:context=".ui.activities.splashScreenActivity.SplashScreenActivity">
 
     <com.example.nikejosecaballero.ui.views.ShimmerTextView
         android:id="@+id/splashScreenLoadingText"

@@ -6,11 +6,11 @@ import dagger.Provides
 import kotlinx.coroutines.delay
 import javax.inject.Inject
 
-class XYZServicesDummyRepo @Inject constructor(private val nothing: String){
+class XYZServicesDummyRepo @Inject constructor(){
     private val className = this.javaClass.simpleName
 
     init {
-        Log.i(className, "Init, dependency injection just for fun: $nothing")
+        Log.i(className, "Init, dependency injection just for fun")
     }
 
     suspend fun authorizeDevice() {

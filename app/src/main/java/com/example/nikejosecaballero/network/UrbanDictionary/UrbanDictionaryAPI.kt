@@ -11,5 +11,5 @@ interface UrbanDictionaryAPI {
         UrbanDictionaryUtils.HEADERS.HOST,
         UrbanDictionaryUtils.HEADERS.KEY
     )
-    suspend fun getDefinitions(@Query("term") term: String): UrbanDictionaryResponse
+    suspend fun getDefinitions(@Query("term") word: String?): UrbanDictionaryResponse
 }

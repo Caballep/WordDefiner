@@ -20,15 +20,6 @@
         android:textSize="22sp"
         android:maxLines="1"
         android:inputType="textFilter"
-        android:hint="Enter a word "/>
-
-    <ImageButton
-        android:id="@+id/actionBarSearchButton"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:layout_marginTop="6dp"
-        android:layout_marginLeft="6dp"
-        android:background="@color/colorPrimary"
-        android:src="@drawable/ic_search_black_24dp"/>
+        android:hint="@string/action_bar_edit_text_hint"/>
 
 </LinearLayout>

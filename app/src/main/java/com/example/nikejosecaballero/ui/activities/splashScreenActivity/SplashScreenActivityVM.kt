@@ -1,12 +1,13 @@
-package com.example.nikejosecaballero.ui.splashScreenActivity
+package com.example.nikejosecaballero.ui.activities.splashScreenActivity
 
 import android.app.Activity
 import android.content.Intent
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+
 import com.example.nikejosecaballero.repositories.XYZServicesDummyRepo
-import com.example.nikejosecaballero.ui.mainActivity.MainActivity
+import com.example.nikejosecaballero.ui.activities.mainActivity.MainActivity
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.Main
 import javax.inject.Inject
@@ -17,10 +18,11 @@ class SplashScreenActivityVM @Inject constructor(xyzServicesDummyRepo: XYZServic
 
     private val className = this.javaClass.simpleName
     private var jobs: List<Job>? = null
+    // TODO: Find right dependency private val idlingResource = CountingIdlingResource("aaa")
 
     init {
         Log.i(className, "Initializing application services")
-
+        //idlingResource.increment()
         // This will make the launched services to run in parallel and not sequentially
         CoroutineScope(Main).launch {
             jobs = arrayListOf(
@@ -28,6 +30,7 @@ class SplashScreenActivityVM @Inject constructor(xyzServicesDummyRepo: XYZServic
                 launch { xyzServicesDummyRepo.launchFirebaseServices() },
                 launch { xyzServicesDummyRepo.launchEssentialsServices() }
             )
+            //idlingResource.decrement()
             jobs?.forEach { it.join() }
             loadingCompleted()
         }

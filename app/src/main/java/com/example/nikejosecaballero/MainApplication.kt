@@ -16,7 +16,7 @@ open class MainApplication : Application() {
 
     protected open fun createComponent() {
         component = DaggerAppComponent.builder()
-            .networkModule(NetworkModule())
+            .networkModule(NetworkModule(this))
             .build()
     }
 }

@@ -1,4 +1,4 @@
-package com.example.nikejosecaballero.ui.mainActivity
+package com.example.nikejosecaballero.ui.activities.mainActivity
 
 import android.content.Context
 import android.os.Bundle
@@ -6,42 +6,43 @@ import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.EditText
+import android.widget.Spinner
+import android.widget.TextView
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nikejosecaballero.MainApplication
 import com.example.nikejosecaballero.R
 import com.example.nikejosecaballero.di.modules.ViewModelFactory
 import com.example.nikejosecaballero.ui.adapters.DefinitionsAdapter
+import com.example.nikejosecaballero.utils.DefinitionsSortType
 import javax.inject.Inject
-
 
 class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
-    private val  mainActivityVM: MainActivityVM by lazy {
-        ViewModelProviders.of(this, viewModelFactory)[MainActivityVM::class.java]
+    val  mainActivityVM: MainActivityVM by lazy {
+        ViewModelProvider(this, viewModelFactory)[MainActivityVM::class.java]
     }
 
     private val className = this.javaClass.simpleName
+    var definitionsRecyclerView: RecyclerView? = null
+    var actionBarEditText: EditText? = null
+    var sortSpinner: Spinner? = null
+    var currentStatusTextView: TextView? = null
 
-    private var definitionsRecyclerView: RecyclerView? = null
-    private var actionBarEditText: EditText? = null
-    private var actionBarSearchButton: ImageButton? = null
-    private var sortSpinner: Spinner? = null
-    private var currentStatusTextView: TextView? = null
+    private var lastSearchResultsFound = false
+    private var isASortingAttempt = false
 
-    var lastSearchResultsFound = false
-    var isASpinnerReset = false
-
-    private val loadingDataMessage = "Loading..."
-    private val nothingFoundMessage = "Nothing found"
+    private val statusLoadingDataMessage = "Loading..."
+    private val statusNothingFoundMessage = "Nothing found"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +52,8 @@ class MainActivity : AppCompatActivity() {
         setupActionBar()
         setupRecyclerView()
         setupSortSpinner()
-        setupLoadingTextView()
+        setupStatusTextView()
+        setDefinitionsObserver()
     }
 
     override fun onStart() {
@@ -59,20 +61,26 @@ class MainActivity : AppCompatActivity() {
         setupActionBar()
     }
 
-    private fun searchWordDefinitions(word: String) {
-        currentStatusTextView?.text = loadingDataMessage
-        currentStatusTextView?.visibility = View.VISIBLE
-        mainActivityVM.getDefinitions(word).observe(this, Observer {
-            definitionsRecyclerView!!.adapter = DefinitionsAdapter(it)
+    private fun setDefinitionsObserver() {
+        mainActivityVM.definitions.observe(this, Observer {
+            definitionsRecyclerView?.adapter = DefinitionsAdapter(it)
+            definitionsRecyclerView?.adapter?.notifyDataSetChanged()
             if(it.isNotEmpty()) {
                 lastSearchResultsFound = true
                 currentStatusTextView?.visibility = View.INVISIBLE
             }else {
                 lastSearchResultsFound = false
-                currentStatusTextView?.text = nothingFoundMessage
+                currentStatusTextView?.text = statusNothingFoundMessage
+                currentStatusTextView?.visibility = View.VISIBLE
             }
-            resetSortSpinner()
         })
+    }
+
+    private fun searchWordDefinitions(word: String) {
+        Log.i(className, "searchWordDefinitions, word: $word, isASortingAttempt: $isASortingAttempt")
+        currentStatusTextView?.text = statusLoadingDataMessage
+        currentStatusTextView?.visibility = View.VISIBLE
+        mainActivityVM.requestDefinitions(word)
     }
 
     private fun setupSortSpinner() {
@@ -80,9 +88,11 @@ class MainActivity : AppCompatActivity() {
         sortSpinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {}
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                if (lastSearchResultsFound && !isASpinnerReset) {
+                Log.i(className, "sortSpinner onItemSelected")
+                if (lastSearchResultsFound) {
                     val selectedItem = sortSpinner?.getItemAtPosition(position).toString()
-                    mainActivityVM.sortDefinitions(selectedItem, this@MainActivity)
+                    isASortingAttempt = true
+                    mainActivityVM.sortDefinitions(DefinitionsSortType.fromString(selectedItem))
                 }
             }
         }
@@ -97,14 +107,7 @@ class MainActivity : AppCompatActivity() {
         val actionBar = supportActionBar
         supportActionBar?.setCustomView(R.layout.action_bar_search)
         actionBar?.displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
-
-        actionBarSearchButton = findViewById(R.id.actionBarSearchButton)
         actionBarEditText = findViewById(R.id.actionBarEditText)
-        actionBarSearchButton?.setOnClickListener { performSearch() }
-        actionBarEditText?.setOnEditorActionListener { v, actionId, event ->
-            performSearch()
-            true
-        }
         actionBarEditText?.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
                 performSearch()
@@ -114,9 +117,8 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun setupLoadingTextView() {
+    private fun setupStatusTextView() {
         currentStatusTextView = findViewById(R.id.currentStatusTextView)
-        currentStatusTextView?.visibility = View.INVISIBLE
     }
 
     private fun hideKeyboard() {
@@ -131,17 +133,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun performSearch() {
-        if (actionBarEditText?.text.toString() != "") {
-            searchWordDefinitions(actionBarEditText?.text.toString())
-            actionBarEditText?.hint = actionBarEditText?.text
-            actionBarEditText?.setText("")
-            definitionsRecyclerView?.requestFocus()
-            this.hideKeyboard()
+        actionBarEditText?.let {
+            if (it.text.isNotEmpty()) {
+                searchWordDefinitions(it.text.toString())
+                it.hint = actionBarEditText?.text
+                it.setText("")
+                definitionsRecyclerView?.requestFocus()
+                this.hideKeyboard()
+            }
         }
     }
 
     private fun resetSortSpinner() {
-        isASpinnerReset = true
+        // TODO: This should happen when a search is performed and there are results
         sortSpinner?.setSelection(0)
     }
 }

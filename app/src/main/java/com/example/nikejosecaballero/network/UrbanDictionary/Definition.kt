@@ -9,6 +9,5 @@ data class Definition(
     @SerializedName("thumbs_down")
     var thumbsDown: Int,
     // Extra:
-    var author: String,
-    var example: String
+    var author: String
 )

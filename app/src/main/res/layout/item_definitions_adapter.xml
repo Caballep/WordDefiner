@@ -11,13 +11,7 @@
         android:id="@+id/definitionTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="You were the Chosen One! It was said that you would destroy the Sith, not
-        join them. bring balance to the force, not leave it in darkness. You were the Chosen One! It was said that you would destroy the Sith, not
-        join them. bring balance to the force, not leave it in darkness. You were the Chosen One! It was said that you would destroy the Sith, not
-        join them. bring balance to the force, not leave it in darkness. You were the Chosen One! It was said that you would destroy the Sith, not
-        join them. bring balance to the force, not leave it in darkness. You were the Chosen One! It was said that you would destroy the Sith, not
-        join them. bring balance to the force, not leave it in darkness. You were the Chosen One! It was said that you would destroy the Sith, not
-        join them. bring balance to the force, not leave it in darkness."
+        android:text="You were the Chosen One! It was said that you would destroy the Sith, not join them. bring balance to the force, not leave it in darkness."
         android:textSize="18dp"/>
 
     <TextView

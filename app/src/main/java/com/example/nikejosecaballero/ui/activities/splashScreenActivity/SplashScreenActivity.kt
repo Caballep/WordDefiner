@@ -1,10 +1,10 @@
-package com.example.nikejosecaballero.ui.splashScreenActivity
+package com.example.nikejosecaballero.ui.activities.splashScreenActivity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.example.nikejosecaballero.MainApplication
 import com.example.nikejosecaballero.R
 import com.example.nikejosecaballero.di.modules.ViewModelFactory
@@ -17,7 +17,7 @@ class SplashScreenActivity : AppCompatActivity() {
     lateinit var viewModelFactory: ViewModelFactory
 
     private val  splashScreenActivityVM: SplashScreenActivityVM by lazy {
-        ViewModelProviders.of(this, viewModelFactory)[SplashScreenActivityVM::class.java]
+        ViewModelProvider(this, viewModelFactory)[SplashScreenActivityVM::class.java]
     }
     private val className = this.javaClass.simpleName
 

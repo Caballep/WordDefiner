@@ -9,17 +9,18 @@
         android:id="@+id/currentStatusTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="NIKE"
+        android:text="I can accept failure, everyone fails at something. But I can't accept not trying. -Michael Jordan"
         android:textStyle="bold"
+        android:padding="35dp"
         android:textColor="@color/colorCounterAccentDark"
         android:layout_gravity="center"
-        android:textSize="30sp" />
+        android:textSize="22sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".ui.mainActivity.MainActivity">
+        tools:context=".ui.activities.mainActivity.MainActivity">
 
         <LinearLayout
             android:id="@+id/linearLayout"

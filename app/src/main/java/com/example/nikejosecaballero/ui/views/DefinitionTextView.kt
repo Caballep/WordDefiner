@@ -33,16 +33,14 @@ class DefinitionTextView @JvmOverloads constructor(
             if(character == '[') {
                 openBracketPos = pos
                 openBracketFound = true
-                Log.i(className, "Opens:" + openBracketPos.toString())
             }
             if(character == ']') {
                 closeBracketPos = pos
                 closeBracketFound = true
-                Log.i(className, "Closes: " + closeBracketPos.toString())
             }
             if(openBracketFound && closeBracketFound) {
-                Log.i(className, "Enclosing previous 2")
-                spannableString.setSpan(colorSpan, openBracketPos, closeBracketPos+1, Spanned.SPAN_INTERMEDIATE)
+                Log.i(className, "DefinitionTextView, decorating text between $openBracketPos and $closeBracketPos")
+                spannableString.setSpan(colorSpan, openBracketPos, closeBracketPos+1, Spanned.SPAN_MARK_MARK)
                 openBracketFound = false
                 closeBracketFound = false
             }
